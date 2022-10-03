@@ -92,7 +92,22 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-MIDDLEWARE_CLASSES = (
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            "context_processors": (
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+            )
+        },
+    },
+]
+
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
@@ -129,10 +144,12 @@ INSTALLED_APPS = (
     # for debugging and testing
     #'debug_toolbar',
     'django_nose',
-    'trunserv',
     
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+
+    # For runserver_plus
+    'django_extensions',
 )
 
 # A sample logging configuration. The only tangible logging

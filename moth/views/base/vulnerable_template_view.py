@@ -1,7 +1,6 @@
-import urlparse
-import urllib
+import urllib.parse
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -60,8 +59,8 @@ class VulnerableTemplateView(TemplateView):
         # pylint: disable=E1101
         context = self.get_context_data()
 
-        response = render_to_response(self.template_name, context)
-        for key, value in self.extra_headers.iteritems():
+        response = render(request, self.template_name, context)
+        for key, value in self.extra_headers.items():
             response[key] = value
 
         return response
@@ -80,21 +79,16 @@ class VulnerableTemplateView(TemplateView):
 
         if self.url_encode_path:
             encoded_path = path.encode('utf-8')
-            path = urllib.quote(encoded_path)
+            path = urllib.parse.quote(encoded_path)
 
         return path
 
     def _create_path(self, trailing_part):
         family, plugin = self.get_family_plugin()
 
-        if isinstance(trailing_part, unicode):
-            trailing_part = trailing_part.encode('utf-8')
+        path = urllib.parse.urlparse(trailing_part).path
 
-        path = urlparse.urlparse(trailing_part).path
-
-        url_path = '%s/%s/%s' % (family, plugin, path)
-
-        return url_path.decode('utf-8')
+        return '%s/%s/%s' % (family, plugin, path)
 
     def get_unicode_url_path(self):
         """

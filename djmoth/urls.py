@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, url
+from django.urls import include, re_path
 from moth.views import RouterView, about, home
 
 
-urlpatterns = patterns('',
-    url(r'^about/', about, name='about'),
-    url(r'^$', home, name='home'),
+urlpatterns = [
+    re_path(r'^about/', about, name='about'),
+    re_path(r'^$', home, name='home'),
     
     # Send all requests that don't match the previous to the router!
-    url(r'', RouterView()),
-)
+    re_path(r'', RouterView()),
+]

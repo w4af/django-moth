@@ -1,5 +1,4 @@
 import os
-import dawg
 
 from inspect import isclass
 from django.http import Http404
@@ -32,7 +31,6 @@ class RouterView(object):
         self._mapping = None
         self._view_instances = []
 
-        self._view_files = []
         self._autoregister()
     
     def _autoregister(self):
@@ -49,7 +47,7 @@ class RouterView(object):
             for klass in self._get_views_from_file(fname):
                 try:
                     view_obj = klass()
-                except Exception, e:
+                except Exception as e:
                     msg = 'An exception occured while trying to register %s: "%s"'
                     raise RuntimeError(msg % (view_obj, e))
                 else:
@@ -58,7 +56,7 @@ class RouterView(object):
                     data.append((view_obj.get_unicode_url_path(), view_index))
 
         # pylint: disable=E1101
-        self._mapping = dawg.IntCompletionDAWG(data)
+        self._mapping = dict(data)
         # pylint: enable=E1101
     
     def _get_vuln_view_directory(self):
@@ -77,28 +75,23 @@ class RouterView(object):
         :return: A list with all the files (with their path) in the
                  vulnerabilities directory.
         """
-        os.path.walk(directory, self._process_view_directory, None)
-        return self._view_files
-    
-    def _process_view_directory(self, args, dirname, filenames):
-        """
-        Called by os.path.walk to process each directory/filenames.
-        
-        :return: None, we save the views to self._view_files
-        """
-        for excluded_path in self.DIR_EXCLUSIONS:
-            if dirname.startswith(excluded_path):
-                return
-        
-        for filename in filenames:
-            if not filename.endswith('.py'):
-                continue
-            
-            if filename in self.FILE_EXCLUSIONS:
-                continue
-            
-            python_filename = os.path.join(dirname, filename)
-            self._view_files.append(python_filename)
+        view_files = []
+        for dirname, dirnames, filenames in os.walk(directory):
+            for excluded_path in self.DIR_EXCLUSIONS:
+                if dirname.startswith(excluded_path):
+                    continue
+
+            for filename in filenames:
+                if not filename.endswith('.py'):
+                    continue
+
+                if filename in self.FILE_EXCLUSIONS:
+                    continue
+
+                python_filename = os.path.join(dirname, filename)
+                view_files.append(python_filename)
+     
+        return view_files
     
     def _get_views_from_file(self, fname):
         """
@@ -199,7 +192,7 @@ class RouterView(object):
     def _get_views_from_path(self, url_path):
         sub_views = []
 
-        for path, view_index in self._mapping.items(url_path):
+        for path, view_index in [ x for x in self._mapping.items() if x[0].startswith(url_path) ]:
             sub_views.append(self._view_instances[view_index])
 
         return sub_views

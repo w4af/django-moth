@@ -1,5 +1,5 @@
-FROM ubuntu:14.04
-MAINTAINER Andres Riancho <andres.riancho@gmail.com>
+FROM ubuntu:20.04
+MAINTAINER Arthur Taylor <arthur.taylor@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -8,10 +8,10 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y supervisor joe
 RUN apt-get install -y libssl-dev libxml2-dev libxslt1-dev libmemcached-dev
-RUN apt-get install -y git-core python-pip build-essential python-dev python-software-properties
+RUN apt-get install -y git-core python3-pip build-essential python3-dev software-properties-common
 
 RUN pip install --upgrade pip
-RUN pip install supervisor-stdout==0.1.1
+RUN pip install git+https://github.com/coderanger/supervisor-stdout
 
 RUN mkdir -p /var/log/supervisor
 RUN useradd ubuntu -d /home/ubuntu

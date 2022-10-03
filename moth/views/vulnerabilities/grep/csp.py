@@ -1,5 +1,5 @@
 from moth.views.base.vulnerable_template_view import VulnerableTemplateView
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 
 HTML = 'Take a look at the Content-Security-Policy header.'
@@ -14,7 +14,7 @@ class CSPTemplateView(object):
         context = self.get_context_data()
         context['html'] = HTML
         
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response[CSP_HEADER] = self.CSP
         
         return response

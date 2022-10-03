@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import urllib
+import urllib.parse
 
 from django.http import Http404
 from django.shortcuts import render
@@ -35,7 +35,7 @@ class EncodedJapaneseQueryStringView(VulnerableTemplateView):
     title = 'Link with a query string in Japanese'
     tags = ['encoded']
     description = 'Query string is URL encoded and uses Japanese chars.'
-    url_path = u'qs-jp.py?%s=1' % urllib.quote(QUERY_STRING.encode('utf-8'))
+    url_path = u'qs-jp.py?%s=1' % urllib.parse.quote(QUERY_STRING.encode('utf-8'))
     extra_headers = {'Content-Type': 'text/html; charset=euc-jp'}
 
     def get(self, request, *args, **kwds):

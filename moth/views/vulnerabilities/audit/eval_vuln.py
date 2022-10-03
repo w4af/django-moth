@@ -42,7 +42,7 @@ class EvalPythonCView(VulnerableTemplateView):
 
         try:
             output = subprocess.check_output(run_cmd, shell=True)
-        except subprocess.CalledProcessError, cpe:
+        except subprocess.CalledProcessError as cpe:
             context['html'] = 'Found execution error: %s' % cpe
         except:
             context['html'] = 'Generic crash!'

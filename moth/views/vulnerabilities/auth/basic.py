@@ -27,7 +27,7 @@ def view_or_basicauth(view, request, users, realm = "", *args, **kwargs):
             #
             if auth[0].lower() == "basic":
                 uname, passwd = base64.b64decode(auth[1]).split(':')
-                print uname, passwd, users
+                print(uname, passwd, users)
                 if (uname, passwd) in users:
                     return view(request, *args, **kwargs)
 

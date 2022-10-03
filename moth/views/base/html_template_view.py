@@ -21,7 +21,7 @@ class HTMLTemplateView(VulnerableTemplateView):
 
         response = render(request, self.template_name, context)
 
-        for key, value in self.extra_headers.iteritems():
+        for key, value in self.extra_headers.items():
             response[key] = value
 
         return response

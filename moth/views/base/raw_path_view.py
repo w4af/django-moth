@@ -1,4 +1,4 @@
-import urlparse
+import urllib.parse
 
 from moth.views.base.html_template_view import HTMLTemplateView
 
@@ -14,8 +14,8 @@ class RawPathTemplateView(HTMLTemplateView):
         We can locate this view in any directory. Other views that don't inherit
         from RawPathTemplateView will get located in a well structured location
         '''
-        path = urlparse.urlparse(self.url_path).path
-        return unicode('%s' % path)
+        path = urllib.parse.urlparse(self.url_path).path
+        return path
 
     # FIXME: Add support for encoding
     get_unicode_url_path = get_url_path

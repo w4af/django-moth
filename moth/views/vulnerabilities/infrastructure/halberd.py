@@ -1,7 +1,7 @@
 import random
 import datetime
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 
 from moth.views.base.vulnerable_template_view import VulnerableTemplateView
 
@@ -17,7 +17,7 @@ class RandomHeaderView(VulnerableTemplateView):
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
         context['html'] = 'See HTTP response headers.'
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response.status_code = 200
 
         # Date: Wed, 26 Feb 2014 17:56:30 GMT

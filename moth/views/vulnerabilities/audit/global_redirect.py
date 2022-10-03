@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response
 from moth.views.base.vulnerable_template_view import VulnerableTemplateView
 
 
@@ -22,7 +21,7 @@ class GlobalRedirect302View(VulnerableTemplateView):
         context = self.get_context_data()
         context['html'] = 'See HTTP response headers.'
         
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response.status_code = 302
         response['Location'] = request.GET['url']
         
@@ -39,10 +38,10 @@ class GlobalRedirect302FilteredView(VulnerableTemplateView):
         
         if url.startswith('http://') or url.startswith('https://'): 
             context['html'] = 'Redirect not allowed.'
-            response = render_to_response(self.template_name, context)
+            response = render(request, self.template_name, context)
         else:
             context['html'] = 'See HTTP response headers.'
-            response = render_to_response(self.template_name, context)
+            response = render(request, self.template_name, context)
             response.status_code = 302
             response['Location'] = url 
         
@@ -86,7 +85,7 @@ class RedirectHeader302View(VulnerableTemplateView):
         context = self.get_context_data()
         context['html'] = 'See HTTP response headers.'
         
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response.status_code = 302
         response['Refresh'] = "0;url=%s" % request.GET['url']
         

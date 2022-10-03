@@ -84,7 +84,7 @@ def get_users(query):
     try:
         users_qs = User.objects.raw(query)
         users = [u for u in users_qs]
-    except Exception, dbe:
+    except Exception as dbe:
         db_error = str(dbe)
     
     return db_error, users

@@ -1,5 +1,4 @@
 import subprocess
-import commands
 import shlex
 
 from django.shortcuts import render
@@ -25,7 +24,7 @@ class TrivialOSCommandingView(VulnerableTemplateView):
             try:
                 context['html'] = subprocess.check_output(request.GET['cmd'],
                                                           shell=True)
-            except subprocess.CalledProcessError, cpe:
+            except subprocess.CalledProcessError as cpe:
                 context['html'] = cpe.output
             except OSError:
                 context['html'] = 'Invalid command'
@@ -44,7 +43,7 @@ class ArgvOSCommandingView(VulnerableTemplateView):
         context = self.get_context_data()
         
         cmd = 'ls %s' % request.GET['param']
-        context['html'] = commands.getoutput(cmd)
+        context['html'] = subprocess.getoutput(cmd)
 
         return render(request, self.template_name, context)
 

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response
 from moth.views.base.vulnerable_template_view import VulnerableTemplateView
 
 
@@ -15,7 +14,7 @@ class SetCookieView(VulnerableTemplateView):
         context = self.get_context_data()
         context['html'] = 'See HTTP response headers.'
         
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response['Set-Cookie'] = '%s=%s;' % (COOKIE_NAME, COOKIE_VALUE)
         
         return response

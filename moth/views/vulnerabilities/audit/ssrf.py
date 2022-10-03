@@ -100,7 +100,7 @@ class GetSSRF(VulnerableTemplateView):
         try:
             self.validate_url(url)
             response_json = requests.get(url).json()
-        except Exception, e:
+        except Exception as e:
             html = ('An error occurred while requesting "%s", the'
                     ' exception message was: "%s"')
             html %= (url, e)

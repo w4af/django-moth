@@ -99,13 +99,13 @@ def run_xpath(query):
         # pylint: disable=E1101
         dom = etree.fromstring(file(XML_DB).read(), parser)
         # pylint: enable=E1101
-    except ParserError, e:
+    except ParserError as e:
         return 'Unable to parse document: %s' % e
 
     # Run the xpath, and return the results
     try:
         nodes = dom.xpath(query)
-    except XPathEvalError, e:
+    except XPathEvalError as e:
         return 'Invalid XPath Expression: %s' % e
 
     if type(nodes) == bool:

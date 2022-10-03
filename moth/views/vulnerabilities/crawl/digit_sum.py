@@ -1,6 +1,5 @@
 import random
 
-from django.contrib.webdesign import lorem_ipsum
 from django.http import Http404
 from django.shortcuts import render
 
@@ -29,6 +28,11 @@ class FileTargetView(HTMLTemplateView):
     Target for the digit sum process.
     '''
 
+def lorem_ipsum_paragraphs(count):
+    result = []
+    for i in count:
+        result.append('<p>Some random text</p>')
+    return "\n".join(result)
 
 class QsDigitsView(VulnerableTemplateView):
     title = 'Digit sum query string'
@@ -57,7 +61,7 @@ class QsDigitsView(VulnerableTemplateView):
             # many others it won't. Lucky me, it passed on the second try.
             random.seed(1)
 
-            context['html'] = '<br><br>'.join(lorem_ipsum.paragraphs(parag))
+            context['html'] = '<br><br>'.join(lorem_ipsum_paragraphs(parag))
         else:
             raise Http404
 

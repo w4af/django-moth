@@ -1,7 +1,6 @@
 import re
 
 from django.shortcuts import render
-from django.shortcuts import render_to_response
 
 from moth.forms.generic import TwoInputForm
 from moth.forms.generic import GenericForm, GETGenericForm
@@ -107,7 +106,7 @@ class XSSWithCSPView(VulnerableTemplateView):
         context = self.get_context_data()
         context['html'] = request.GET['text']
 
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response['Content-Security-Policy'] = "default-src 'self'"
 
         return response

@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from moth.views.base.vulnerable_template_view import VulnerableTemplateView
 
 
@@ -11,7 +11,7 @@ class StrangeHeadersView(VulnerableTemplateView):
         context = self.get_context_data()
         context['html'] = 'View HTTP response headers.'
         
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response['w3af-rocks'] = 'http://www.example.com/'
         
         return response
