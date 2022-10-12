@@ -25,5 +25,5 @@ class StaticFileView(VulnerableTemplateView):
         file_path = os.path.join(STATIC_DIR, self.STATIC_FILE)
         content_type, _ = mimetypes.guess_type(self.STATIC_FILE)
         
-        return HttpResponse(file(file_path).read(),
-                            content_type=content_type)
+        with open(file_path, "rb") as f:
+            return HttpResponse(f.read(), content_type=content_type)

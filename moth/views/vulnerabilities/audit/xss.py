@@ -124,7 +124,7 @@ class XSSWithWeakCSPView(VulnerableTemplateView):
         context = self.get_context_data()
         context['html'] = request.GET['text']
 
-        response = render_to_response(self.template_name, context)
+        response = render(request, self.template_name, context)
         response['Content-Security-Policy'] = "script-src *;"
 
         return response

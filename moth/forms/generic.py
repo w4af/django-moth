@@ -30,7 +30,7 @@ class GETGenericForm(GenericForm):
         # pylint: disable=E1002
         super(GETGenericForm, self).__init__(*args, **kwargs)
 
-        self.helper.set_form_method('GET')
+        self.helper.form_method = 'GET'
 
 
 class TwoInputForm(forms.Form):

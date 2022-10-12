@@ -97,7 +97,8 @@ def run_xpath(query):
     try:
         parser = XMLParser()
         # pylint: disable=E1101
-        dom = etree.fromstring(file(XML_DB).read(), parser)
+        with open(XML_DB) as f:
+            dom = etree.fromstring(f.read(), parser)
         # pylint: enable=E1101
     except ParserError as e:
         return 'Unable to parse document: %s' % e

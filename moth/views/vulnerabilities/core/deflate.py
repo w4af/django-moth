@@ -15,7 +15,7 @@ class DeflateEncodingView(HTMLTemplateView):
         context['html'] = 'View HTTP response headers.'
         response_body = render_to_string(self.template_name, context)
 
-        compressed_body = zlib.compress(response_body)
+        compressed_body = zlib.compress(response_body.encode('utf-8'))
 
         response = HttpResponse(compressed_body)
         response['Content-Encoding'] = 'deflate'

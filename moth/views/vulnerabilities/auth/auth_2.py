@@ -19,7 +19,7 @@ class SquareBracketsInput(TextInput):
     """
     Hacking the django framework a little bit...
     """
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         return mark_safe('<input name="%s" />' % LOGIN_USER_NAME)
 
 

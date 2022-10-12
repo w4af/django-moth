@@ -30,7 +30,7 @@ class FileTargetView(HTMLTemplateView):
 
 def lorem_ipsum_paragraphs(count):
     result = []
-    for i in count:
+    for i in range(count):
         result.append('<p>Some random text</p>')
     return "\n".join(result)
 

@@ -13,4 +13,6 @@ class StrangeHTTPCodeView(VulnerableTemplateView):
         status = 527
         context['html'] = 'Error! HTTP response code is 527.'
 
-        return render(request, self.template_name, context, status=status)
+        response = render(request, self.template_name, context)
+        response.status_code = status
+        return response
