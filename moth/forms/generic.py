@@ -13,6 +13,7 @@ class GenericForm(forms.Form):
         super(GenericForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
+        self.helper.disable_csrf = True
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-x'
         self.helper.field_class = 'col-lg-x'
