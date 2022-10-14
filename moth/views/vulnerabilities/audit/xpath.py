@@ -1,5 +1,5 @@
 import os
-import cgi
+import html
 
 # pylint: disable=E0611
 from lxml import etree
@@ -27,7 +27,6 @@ class SingleQuoteXpathView(FormTemplateView):
         context = self.get_context_data()
 
         user_input = request.POST['text']
-        user_input = user_input.replace(' ', '-')
         if user_input:
             context['message'] = run_xpath(self.xpath_query_fmt % user_input)
         else:
@@ -97,7 +96,7 @@ def run_xpath(query):
     try:
         parser = XMLParser()
         # pylint: disable=E1101
-        with open(XML_DB) as f:
+        with open(XML_DB, "rb") as f:
             dom = etree.fromstring(f.read(), parser)
         # pylint: enable=E1101
     except ParserError as e:
@@ -120,7 +119,7 @@ def run_xpath(query):
                 s = etree.tostring(node,
                                    encoding='unicode',
                                    pretty_print=True).strip()
-                node_strings.append(cgi.escape(s))
+                node_strings.append(html.escape(s))
                 # pylint: enable=E1101
             except TypeError:
                 # Returned a text node, not an element.
