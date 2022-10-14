@@ -23,7 +23,7 @@ class TrivialOSCommandingView(VulnerableTemplateView):
         else:
             try:
                 context['html'] = subprocess.check_output(request.GET['cmd'],
-                                                          shell=True)
+                                                          shell=True).decode('utf-8')
             except subprocess.CalledProcessError as cpe:
                 context['html'] = cpe.output
             except OSError:

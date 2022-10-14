@@ -16,8 +16,9 @@ class TrivialLocalFileReadView(VulnerableTemplateView):
         fname = os.path.join(STATIC_DIR, request.GET['file'])
 
         try:
-            context['html'] = file(fname).read()
-        except:
+            with open(fname) as f:
+                context['html'] = f.read()
+        except Exception as e:
             context['html'] = 'Error!'
             
         return render(request, self.template_name, context)
@@ -33,8 +34,9 @@ class AppendExtensionLocalFileReadView(VulnerableTemplateView):
         fname = os.path.join(STATIC_DIR, request.GET['file']) + '.txt'
 
         try:
-            context['html'] = file(fname).read()
-        except:
+            with open(fname) as f:
+                context['html'] = f.read()
+        except Exception as e:
             context['html'] = 'Error!'
 
         return render(request, self.template_name, context)
@@ -49,8 +51,9 @@ class FullPathFileReadView(VulnerableTemplateView):
         context = self.get_context_data()
 
         try:
-            context['html'] = file(request.GET['file']).read()
-        except:
+            with open(request.GET['file']) as f:
+                context['html'] = f.read()
+        except Exception as e:
             context['html'] = 'Error!'
 
         return render(request, self.template_name, context)
