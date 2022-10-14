@@ -32,7 +32,7 @@ class EvalPythonCView(VulnerableTemplateView):
                   ' using single quotes.'
     url_path = 'eval_single.py?text=1'
 
-    CMD_FMT = "python -c '%s'"
+    CMD_FMT = "python3 -c '%s'"
 
     def get(self, request, *args, **kwds):
         context = self.get_context_data()
