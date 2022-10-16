@@ -43,6 +43,7 @@ class TwoInputForm(forms.Form):
         super(TwoInputForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
+        self.helper.disable_csrf = True
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-x'
         self.helper.field_class = 'col-lg-x'
@@ -64,6 +65,7 @@ class LoginForm(forms.Form):
         super(LoginForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
+        self.helper.disable_csrf = True
         self.helper.form_class = 'form-horizontal'
         self.helper.label_class = 'col-lg-x'
         self.helper.field_class = 'col-lg-x'
