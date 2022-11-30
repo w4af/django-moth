@@ -9,6 +9,7 @@ RUN apt-get upgrade -y
 RUN apt-get install -y supervisor joe
 RUN apt-get install -y libssl-dev libxml2-dev libxslt1-dev libmemcached-dev
 RUN apt-get install -y git-core python3-pip build-essential python3-dev software-properties-common
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 RUN pip install --upgrade pip
 RUN pip install git+https://github.com/coderanger/supervisor-stdout
